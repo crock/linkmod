@@ -27,6 +27,10 @@ function App() {
         console.log(`Number of URLs: ${urls.length}`);
         setLinks(urls);
         setMdLinks(urls.map((url) => `[${url}](${url})`).join('\n'));
+        if (inputRef.current) {
+          inputRef.current.value = 'Paste Here';
+          inputRef.current.select();
+        }
       }
     }
   };
@@ -39,7 +43,12 @@ function App() {
 
   return (
     <>
-      <div className="w-screen h-screen flex flex-col justify-center items-center">
+      <div
+        className={classNames('w-screen h-screen flex flex-col items-center', {
+          'justify-start': links.length,
+          'justify-center': !pasteboard.length,
+        })}
+      >
         {pasteboard ? (
           <>
             <div className="w-full flex flex-row flex-nowrap justify-between items-center p-2">
@@ -50,7 +59,7 @@ function App() {
                 <CopyToClipboard
                   text={links.join('\n')}
                   onCopy={() =>
-                    alert(`Copied ${links.length} urls to clipboard`)
+                    console.info(`Copied ${links.length} urls to clipboard`)
                   }
                 >
                   <button className="bg-blue-500 hover:bg-blue-400 py-1 px-2 font-semibold uppercase text-white text-xs ml-1">
@@ -60,7 +69,7 @@ function App() {
                 <CopyToClipboard
                   text={mdLinks}
                   onCopy={() =>
-                    alert(
+                    console.info(
                       `Copied ${links.length} links in Markdown format to clipboard.`
                     )
                   }
@@ -71,7 +80,7 @@ function App() {
                 </CopyToClipboard>
               </div>
             </div>
-            <ul className="w-full h-full list-none overflow-x-hidden overflow-y-scroll">
+            <ul className="w-full h-auto list-none overflow-x-hidden overflow-y-scroll">
               {links.length
                 ? links.map((link) => (
                     <li key={link}>
@@ -102,7 +111,7 @@ function App() {
           className={classNames(
             'w-[100px] h-auto relative resize-none mt-6 text-black border border-1 text-center outline-none',
             {
-              'w-1 h-1 absolute -left-1 -top-1 text-transparent mt-0':
+              'w-1 h-1 absolute -left-1 -top-1 mt-0':
                 links.length || pasteboard.length,
             }
           )}
