@@ -16,6 +16,13 @@ export default defineConfig({
         background_color: '#fff',
         theme_color: '#3b82f6',
         description: 'Paste some text to extract a list of clickable links.',
+        icons: [
+          {
+            src: '/icon.png',
+            sizes: '512x512',
+            type: 'image/png',
+          },
+        ],
       },
     }),
   ],
