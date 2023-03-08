@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
+import classNames from 'classnames';
 
 function App() {
   const [pasteboard, setPasteboard] = useState('');
@@ -98,7 +99,13 @@ function App() {
           cols={1}
           rows={1}
           tabIndex={0}
-          className="w-1 h-1 relative left-unset top-unset lg:absolute lg:-left-1 lg:-top-1 resize-none mt-3 lg:mt-0 border-none background-none outline-none text-transparent"
+          className={classNames(
+            'w-[100px] h-auto relative resize-none mt-6 text-black border border-1 text-center outline-none',
+            {
+              'w-1 h-1 absolute -left-1 -top-1 text-transparent mt-0':
+                links.length || pasteboard.length,
+            }
+          )}
           onPaste={handlePaste}
           onBlur={focus}
           autoFocus
