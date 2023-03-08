@@ -21,12 +21,15 @@ function App() {
 
   const extractLinks = () => {
     if (pasteboard.length) {
-      const urls = pasteboard.match(/\bhttps?:\/\/\S+/gi);
+      const urls = pasteboard.match(
+        /https?:\/\/[a-zA-Z0-9\.-]+\/?[a-zA-Z0-9\/-]+\??[a-zA-Z0-9\/-_\.&;=]+/gim
+      );
 
       if (urls?.length) {
-        console.log(`Number of URLs: ${urls.length}`);
-        setLinks(urls);
-        setMdLinks(urls.map((url) => `[${url}](${url})`).join('\n'));
+        const uniqueArr = [...new Set(urls)];
+        console.log(`Number of Unique URLs: ${uniqueArr.length}`);
+        setLinks(uniqueArr);
+        setMdLinks(uniqueArr.map((url) => `[${url}](${url})`).join('\n'));
         if (inputRef.current) {
           inputRef.current.value = 'Paste Here';
           inputRef.current.select();
