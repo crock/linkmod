@@ -88,7 +88,7 @@ function App() {
           </>
         ) : (
           <>
-            <p className="text-sm md:text-lg text-gray-800 dark:text-gray-100">
+            <p className="text-sm md:text-lg text-gray-800 dark:text-gray-100 user-select-none">
               Paste some text to extract a list of clickable links.
             </p>
           </>
@@ -98,7 +98,7 @@ function App() {
           cols={1}
           rows={1}
           tabIndex={0}
-          className="w-1 h-1 absolute -left-1 -top-1 lg:relative lg:left-unset lg:top-unset resize-none mt-3 lg:mt-0 border-none background-none outline-none text-transparent"
+          className="w-1 h-1 relative left-unset top-unset lg:absolute lg:-left-1 lg:-top-1 resize-none mt-3 lg:mt-0 border-none background-none outline-none text-transparent"
           onPaste={handlePaste}
           onBlur={focus}
           autoFocus
