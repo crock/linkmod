@@ -4,6 +4,7 @@ import { CopyToClipboard } from 'react-copy-to-clipboard';
 function App() {
   const [pasteboard, setPasteboard] = useState('');
   const [links, setLinks] = useState<RegExpMatchArray | string[]>([]);
+  const [mdLinks, setMdLinks] = useState<string>('');
 
   const focus = (event: any) => {
     event.target.focus();
@@ -22,6 +23,7 @@ function App() {
       if (urls?.length) {
         console.log(`Number of URLs: ${urls.length}`);
         setLinks(urls);
+        setMdLinks(urls.map((url) => `[${url}](${url})`).join('\n'));
       }
     }
   };
@@ -50,9 +52,23 @@ function App() {
             <div>
               <CopyToClipboard
                 text={links.join('\n')}
-                onCopy={() => alert(`Copied ${links.length} urls.`)}
+                onCopy={() => alert(`Copied ${links.length} urls to clipboard`)}
               >
-                <button>Copy to clipboard</button>
+                <button className="bg-blue-500 hover:bg-blue-400 py-1 px-2 font-semibold uppercase text-white text-xs ml-1">
+                  Copy URLs
+                </button>
+              </CopyToClipboard>
+              <CopyToClipboard
+                text={mdLinks}
+                onCopy={() =>
+                  alert(
+                    `Copied ${links.length} links in Markdown format to clipboard.`
+                  )
+                }
+              >
+                <button className="bg-blue-500 hover:bg-blue-400 py-1 px-2 font-semibold uppercase text-white text-xs ml-1">
+                  Copy Markdown Links
+                </button>
               </CopyToClipboard>
             </div>
           </div>
@@ -74,7 +90,7 @@ function App() {
         </>
       ) : (
         <div className="w-screen h-screen flex justify-center items-center">
-          <p className="text-lg text-gray-800 dark:text-gray-100">
+          <p className="text-sm md:text-lg text-gray-800 dark:text-gray-100">
             Paste some text to extract a list of clickable links.
           </p>
         </div>
