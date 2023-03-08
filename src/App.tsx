@@ -3,7 +3,7 @@ import { CopyToClipboard } from 'react-copy-to-clipboard';
 
 function App() {
   const [pasteboard, setPasteboard] = useState('');
-  const [links, setLinks] = useState([]);
+  const [links, setLinks] = useState<RegExpMatchArray | string[]>([]);
 
   const focus = (event: any) => {
     event.target.focus();
