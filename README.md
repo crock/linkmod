@@ -1,3 +1,4 @@
-# link-extractor
+# Link Extractor
 
-[Edit on StackBlitz ⚡️](https://stackblitz.com/edit/vitejs-vite-jgvkjx)
+This is a simple PWA that you can install on your device. It works offline.
+You simply paste some text anywhere on the page and it extracts all the valid http/https URLs and renders them as a clean list of clickable/tappable links.
