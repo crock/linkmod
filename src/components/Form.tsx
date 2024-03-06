@@ -56,7 +56,7 @@ const Form = ({
           className="form-input w-full"
           onPaste={pasteEvent}
           autoFocus
-          defaultValue="Paste Here"
+          placeholder="Paste some text or HTML here..."
         ></textarea>
         <div className="flex flex-col justify-start items-start mt-4">
           <label className="flex flex-row flex-nowrap justify-start items-center">

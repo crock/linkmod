@@ -59,25 +59,24 @@ function App() {
         allLinks.push(...uniqueArr)
       }
 
+      allLinks = allLinks.map((url) => url.replace(/(\/|\\)$/, ""));
+
       if (filterAssets) {
-        const patt = /\.(svg|png|webp|jpg|jpeg|heic|gif|js|css|webmanifest)$/i
+        const patt = /\.(svg|png|webp|jpe?g|heic|gif|js|css|webmanifest)$/i
         allLinks = allLinks.filter((link) => !patt.test(link))
       }
 
       setLinks(allLinks);
       setMdLinks(allLinks.map((url) => `[${url}](${url})`).join("\n"));
 
-      if (textAreaRef.current) {
-        textAreaRef.current.value = "Paste Here";
-        textAreaRef.current.select();
-      }
+      textAreaRef.current?.select();
     }
   };
 
   useEffect(extractLinks, [pasteboard, rootDomain, filterAssets]);
 
   useEffect(() => {
-    textAreaRef.current?.select();
+    textAreaRef.current?.focus();
   }, []);
 
   return (
