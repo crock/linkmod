@@ -5,6 +5,7 @@ import Form from "./components/Form";
 function App() {
   const [pasteboard, setPasteboard] = useState("");
   const [rootDomain, setRootDomain] = useState("")
+  const [filterAssets, setFilterAssets] = useState(false)
   const [links, setLinks] = useState<RegExpMatchArray | string[]>([]);
   const [mdLinks, setMdLinks] = useState<string>("");
   const textAreaRef = useRef<HTMLTextAreaElement | null>(null);
@@ -26,6 +27,10 @@ function App() {
     }
   }
 
+  const handleFilterAssetsTick = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setFilterAssets(event.target.checked)
+  }
+
   const extractLinks = () => {
     let allLinks = []
 
@@ -35,7 +40,7 @@ function App() {
       );
 
       const internalUrls = pasteboard.match(
-        /href=\"(\/[a-zA-Z0-9\.-_~!$&'\(\)\*\+,;=:@]+)\"/gim
+        /href=\"(\/(?!\/)[a-zA-Z0-9\.-_~!$&'\(\)\*\+,;=:@]+)\"/gim
       )
 
       if (internalUrls?.length) {
@@ -52,6 +57,11 @@ function App() {
         allLinks.push(...uniqueArr)
       }
 
+      if (filterAssets) {
+        const patt = /\.(svg|png|webp|jpg|jpeg|heic|gif|js|css|webmanifest)$/i
+        allLinks = allLinks.filter((link) => !patt.test(link))
+      }
+
       setLinks(allLinks);
       setMdLinks(allLinks.map((url) => `[${url}](${url})`).join("\n"));
 
@@ -62,7 +72,7 @@ function App() {
     }
   };
 
-  useEffect(extractLinks, [pasteboard, rootDomain]);
+  useEffect(extractLinks, [pasteboard, rootDomain, filterAssets]);
 
   useEffect(() => {
     textAreaRef.current?.select();
@@ -70,7 +80,7 @@ function App() {
 
   return (
     <div className="grid grid-cols-12 gap-4 h-screen">
-      <Form className="col-span-12 md:col-span-4 p-10 bg-white h-auto md:h-full" ref={textAreaRef} pasteEvent={handlePaste} rootDomainChangeHandler={handleRootDomainChange} />
+      <Form className="col-span-12 md:col-span-4 p-10 bg-white h-auto md:h-screen" ref={textAreaRef} pasteEvent={handlePaste} rootDomainChangeHandler={handleRootDomainChange} filterAssetsChangeHandler={handleFilterAssetsTick} />
       <div className="col-span-12 md:col-span-8 flex flex-col items-center justify-start">
         <div className="w-full flex flex-row flex-nowrap justify-between items-center p-2">
           <p className="text-xs text-black dark:text-white">
