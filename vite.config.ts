@@ -18,7 +18,7 @@ export default defineConfig({
         description: 'Paste some text or HTML to extract a list of clickable links.',
         icons: [
           {
-            src: '/LinkExtractor-icon.png',
+            src: '/icon.png',
             sizes: '512x512',
             type: 'image/png',
             purpose: 'any maskable',

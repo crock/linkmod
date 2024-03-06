@@ -1,6 +1,9 @@
-# Link Extractor
+# LinkMod
 
-This is a simple PWA that you can install on your device. It works offline.
-You simply paste some text anywhere on the page and it extracts all the valid http/https URLs and renders them as a clean list of clickable/tappable links.
+This is a simple web app that you can install on your device. 
 
-![macOS Screenshot PWA](https://clickable-link-extractor.netlify.app/pwa-screenshot-macos.png)
+It works offline.
+
+You simply paste some text or HTML and it extracts all the internal and external URLs and renders them as a clean list of clickable/tappable links.
+
+![PWA Screenshot - Desktop Browser](./public/pwa-screenshot.png)
