@@ -9,13 +9,13 @@ export default defineConfig({
     VitePWA({
       registerType: 'autoUpdate',
       manifest: {
-        name: 'LinkExtractor',
-        short_name: 'LinkExtractor',
+        name: 'LinkMod',
+        short_name: 'LinkMod',
         start_url: '.',
         display: 'standalone',
         background_color: '#fff',
         theme_color: '#3b82f6',
-        description: 'Paste some text to extract a list of clickable links.',
+        description: 'Paste some text or HTML to extract a list of clickable links.',
         icons: [
           {
             src: '/LinkExtractor-icon.png',
