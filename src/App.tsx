@@ -39,16 +39,18 @@ function App() {
         /https?:\/\/[a-zA-Z0-9\.-]+\/?[a-zA-Z0-9\/-]+\??[a-zA-Z0-9\/-_\.&;=]+/gim
       );
 
-      const internalUrls = pasteboard.match(
-        /href=\"(\/(?!\/)[a-zA-Z0-9\.-_~!$&'\(\)\*\+,;=:@]+)\"/gim
-      )
-
-      if (internalUrls?.length) {
-        // remove href=" from the beginning and " from the end
-        const cleanedInternalUrls = internalUrls.map((url) => `https://${rootDomain}${url.slice(6, -1)}`);
-        const uniqueArr = [...new Set(cleanedInternalUrls)];
-        console.log(`Number of Unique Internal URLs: ${uniqueArr.length}`);
-        allLinks.push(...uniqueArr)
+      if (rootDomain) {
+        const internalUrls = pasteboard.match(
+          /href=\"(\/(?!\/)[a-zA-Z0-9\.-_~!$&'\(\)\*\+,;=:@]+)\"/gim
+        )
+  
+        if (internalUrls?.length) {
+          // remove href=" from the beginning and " from the end
+          const cleanedInternalUrls = internalUrls.map((url) => `https://${rootDomain}${url.slice(6, -1)}`);
+          const uniqueArr = [...new Set(cleanedInternalUrls)];
+          console.log(`Number of Unique Internal URLs: ${uniqueArr.length}`);
+          allLinks.push(...uniqueArr)
+        }
       }
 
       if (externalUrls?.length) {
