@@ -1,4 +1,5 @@
 import classNames from "classnames";
+import Search from "./Search";
 
 interface FormProps {
   ref: React.LegacyRef<HTMLTextAreaElement> | undefined;
@@ -9,6 +10,7 @@ interface FormProps {
   filterAssetsChangeHandler:
     | React.ChangeEventHandler<HTMLInputElement>
     | undefined;
+  searchHandler: React.ChangeEventHandler<HTMLInputElement> | undefined;
   className?: string | undefined;
 }
 
@@ -17,6 +19,7 @@ const Form = ({
   pasteEvent,
   rootDomainChangeHandler,
   filterAssetsChangeHandler,
+  searchHandler,
   className = "",
 }: FormProps) => {
   return (
@@ -74,6 +77,7 @@ const Form = ({
             </span>
           </label>
         </div>
+        <Search searchHandler={searchHandler} />
       </div>
 
       <footer>
