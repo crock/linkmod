@@ -1,5 +1,7 @@
 import classNames from "classnames";
 import Search from "./Search";
+import FilterAssetsCheckbox from "./FilterAssetsCheckbox";
+import ToggleQueryStringsCheckbox from "./ToggleQueryStringsCheckbox";
 
 interface FormProps {
   ref: React.LegacyRef<HTMLTextAreaElement> | undefined;
@@ -10,6 +12,9 @@ interface FormProps {
   filterAssetsChangeHandler:
     | React.ChangeEventHandler<HTMLInputElement>
     | undefined;
+  toggleQueryStringsHandler: 
+    | React.ChangeEventHandler<HTMLInputElement> 
+    | undefined;
   searchHandler: React.ChangeEventHandler<HTMLInputElement> | undefined;
   className?: string | undefined;
 }
@@ -19,6 +24,7 @@ const Form = ({
   pasteEvent,
   rootDomainChangeHandler,
   filterAssetsChangeHandler,
+  toggleQueryStringsHandler,
   searchHandler,
   className = "",
 }: FormProps) => {
@@ -61,22 +67,8 @@ const Form = ({
           autoFocus
           placeholder="Paste some text or HTML here..."
         ></textarea>
-        <div className="flex flex-col justify-start items-start mt-4">
-          <label className="flex flex-row flex-nowrap justify-start items-center">
-            <input
-              name="filterAssets"
-              id="filterAssets"
-              type="checkbox"
-              className="form-checkbox"
-              tabIndex={3}
-              onChange={filterAssetsChangeHandler}
-              title="Check this box if you would like to exclude links to website images, stylesheets, or javascript files."
-            />
-            <span className="font-semibold text-base pl-2">
-              Exclude Website Assets
-            </span>
-          </label>
-        </div>
+        <FilterAssetsCheckbox filterAssetsChangeHandler={filterAssetsChangeHandler} />
+        <ToggleQueryStringsCheckbox toggleQueryStringsCheckboxHandler={toggleQueryStringsHandler} />
         <Search searchHandler={searchHandler} />
       </div>
 

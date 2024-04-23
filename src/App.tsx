@@ -7,6 +7,7 @@ function App() {
   const [rootDomain, setRootDomain] = useState("")
   const [search, setSearch] = useState<string>("");
   const [filterAssets, setFilterAssets] = useState(false)
+  const [toggleQueryStrings, setToggleQueryStrings] = useState(false)
   const [links, setLinks] = useState<RegExpMatchArray | string[]>([]);
   const [mdLinks, setMdLinks] = useState<string>("");
   const textAreaRef = useRef<HTMLTextAreaElement | null>(null);
@@ -30,6 +31,10 @@ function App() {
 
   const handleFilterAssetsTick = (event: React.ChangeEvent<HTMLInputElement>) => {
     setFilterAssets(event.target.checked)
+  }
+
+  const handleToggleQueryStringsTick = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setToggleQueryStrings(event.target.checked)
   }
 
   const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -67,8 +72,12 @@ function App() {
 
       allLinks = allLinks.map((url) => url.replace(/(\/|\\)$/, ""));
 
+      if (toggleQueryStrings) {
+        allLinks = allLinks.map((url) => url.split("?")[0])
+      }
+
       if (filterAssets) {
-        const patt = /\.(svg|png|webp|jpe?g|heic|gif|js|css|webmanifest)$/i
+        const patt = /\.(svg|png|webp|jpe?g|heic|gif|js|css|webmanifest|ico|woff2)$/i
         allLinks = allLinks.filter((link) => !patt.test(link))
       }
 
@@ -86,7 +95,7 @@ function App() {
     }
   };
 
-  useEffect(extractLinks, [pasteboard, rootDomain, filterAssets, search]);
+  useEffect(extractLinks, [pasteboard, rootDomain, filterAssets, toggleQueryStrings, search]);
 
   useEffect(() => {
     textAreaRef.current?.focus();
@@ -94,7 +103,7 @@ function App() {
 
   return (
     <div className="grid grid-cols-12 gap-4 h-screen">
-      <Form className="col-span-12 md:col-span-4 p-10 bg-white h-auto md:h-screen" ref={textAreaRef} pasteEvent={handlePaste} rootDomainChangeHandler={handleRootDomainChange} filterAssetsChangeHandler={handleFilterAssetsTick} searchHandler={handleSearch} />
+      <Form className="col-span-12 md:col-span-4 p-10 bg-white h-auto md:h-screen" ref={textAreaRef} pasteEvent={handlePaste} rootDomainChangeHandler={handleRootDomainChange} filterAssetsChangeHandler={handleFilterAssetsTick} toggleQueryStringsHandler={handleToggleQueryStringsTick} searchHandler={handleSearch} />
       <div className="col-span-12 md:col-span-8 flex flex-col items-center justify-start">
         <div className="w-full flex flex-row flex-nowrap justify-between items-center p-2">
           <p className="text-xs text-black dark:text-white">
